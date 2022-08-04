@@ -1,0 +1,5 @@
+name: btelnyy-mcstamina
+main: me.btelnyy.mcstamina.McStamina
+version: ${project.version}
+api-version: 1.19
+commands:
