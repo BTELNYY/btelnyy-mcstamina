@@ -29,7 +29,7 @@ public class EventListener implements Listener {
             return;
         }
         if(!event.isSprinting()){
-            if(p.getFoodLevel() == 4){
+            if(p.getFoodLevel() == 3){
                 Utils.sendActionBarMessage(p, Utils.colored(language.getString("out_of_stamina")));
             }
             sprintingPlayers.remove(p);
