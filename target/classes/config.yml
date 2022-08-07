@@ -1,7 +1,0 @@
-# Should the plugin be enabled?
-plugin_enabled: true
-
-# Interval of stamina removal while sprinting (-1 point of hunger per x ticks)
-# 20 ticks is one IRL second
-# This means that at 20, you can run for 7 seconds (since at 3 hunger bars you cant sprint anymore)
-stamina_deplete_rate: 10
