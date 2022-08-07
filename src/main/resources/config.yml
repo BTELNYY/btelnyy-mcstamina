@@ -1,12 +1,7 @@
 # Should the plugin be enabled?
 plugin_enabled: true
 
-# How long can a player run for?
-player_max_run_time: 15
-
-# How long should a player have to not sprint in order for their stamina to begin recovering?
-player_cooldown_time: 1
-
 # Interval of stamina removal while sprinting (-1 point of hunger per x ticks)
 # 20 ticks is one IRL second
-stamina_deplete_rate: 5
+# This means that at 20, you can run for 7 seconds (since at 3 hunger bars you cant sprint anymore)
+stamina_deplete_rate: 10
