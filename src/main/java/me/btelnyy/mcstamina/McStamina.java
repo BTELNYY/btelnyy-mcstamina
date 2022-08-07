@@ -1,11 +1,13 @@
 package me.btelnyy.mcstamina;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import me.btelnyy.mcstamina.constants.ConfigData;
+import me.btelnyy.mcstamina.constants.Globals;
 import me.btelnyy.mcstamina.listener.EventListener;
 import me.btelnyy.mcstamina.service.file_manager.Configuration;
 import me.btelnyy.mcstamina.service.file_manager.FileID;
@@ -53,12 +55,16 @@ public class McStamina extends JavaPlugin {
         // Register events
         getServer().getPluginManager().registerEvents(new EventListener(), this);
 
+        //Start thread
+        Globals.hungerThread = EventListener.hungerThread();
+
         // GitHub message
         getLogger().info("Check out the project on GitHub! https://github.com/BTELNYY/btelnyy-mcstamina");
     }
     @Override
     public void onDisable(){
-
+        //stop thread
+        Bukkit.getScheduler().cancelTask(Globals.hungerThread);
     }
 
 
