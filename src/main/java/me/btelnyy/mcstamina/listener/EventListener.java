@@ -7,52 +7,27 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerToggleSprintEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerKickEvent;
 
-import me.btelnyy.mcstamina.McStamina;
-import me.btelnyy.mcstamina.constants.ConfigData;
-import me.btelnyy.mcstamina.service.Utils;
-import me.btelnyy.mcstamina.service.file_manager.Configuration;
-import me.btelnyy.mcstamina.service.file_manager.FileID;
+import me.btelnyy.mcstamina.constants.Globals;
+import me.btelnyy.mcstamina.service.StaminaService;
 
 
 public class EventListener implements Listener {
-    private static final Configuration language = McStamina.getInstance().getFileManager().getFile(FileID.LANGUAGE).getConfiguration();
-    
+
     static List<Player> sprintingPlayers = new ArrayList<Player>();
 
     @EventHandler
-    public void playerSprintToggle(PlayerToggleSprintEvent event){
-        Player p = event.getPlayer();
-        if(event.isSprinting()){
-            sprintingPlayers.add(p);
-            return;
-        }
-        if(!event.isSprinting()){
-            if(p.getFoodLevel() == 3){
-                Utils.sendActionBarMessage(p, Utils.colored(language.getString("out_of_stamina")));
-            }
-            sprintingPlayers.remove(p);
-            return;
-        }
+    public void playerJoinEvent(PlayerJoinEvent event){
+        StaminaService service = new StaminaService();
+        Globals.hungerThreads.put(event.getPlayer(), service.startService(event.getPlayer()));
     }
 
-    public static int hungerThread(){
-         return Bukkit.getScheduler().scheduleSyncRepeatingTask(McStamina.getInstance(), new Runnable() {
-            @Override
-            public void run() {
-                if(!ConfigData.getInstance().pluginEnabled){
-                    return;
-                }
-                for(Player player : Bukkit.getOnlinePlayers() ){
-                    if(sprintingPlayers.contains(player)){
-                        player.setFoodLevel(player.getFoodLevel() - 1);
-                    }else{
-                        player.setFoodLevel(player.getFoodLevel() + 1);
-                    }
-                }
-            }
-        }, 0L, ConfigData.getInstance().depleteRate);
+    @EventHandler
+    public void playerLeaveEvent(PlayerKickEvent event){
+        Bukkit.getScheduler().cancelTask(Globals.hungerThreads.get(event.getPlayer()));
+        Globals.hungerThreads.remove(event.getPlayer());
     }
 }
 
