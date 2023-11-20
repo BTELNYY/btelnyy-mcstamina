@@ -14,16 +14,16 @@ public class StaminaService implements Runnable{
     @Override
     public void run() {
         if(owner.isSprinting()){
-            if(owner.getPotionEffect(PotionEffectType.SATURATION) == null){
+            if(owner.getPotionEffect(PotionEffectType.SATURATION) != null){
                 return;
             }
-            owner.setFoodLevel(owner.getFoodLevel() - 1);
+            owner.setFoodLevel(owner.getFoodLevel() - ConfigData.getInstance().staminaDepleteAmount);
         }else{
             if(owner.getFoodLevel() >= 20){
                 owner.setFoodLevel(20);
                 return;
             }
-            owner.setFoodLevel(owner.getFoodLevel() + 1);
+            owner.setFoodLevel(owner.getFoodLevel() + ConfigData.getInstance().staminaRegainAmount);
         }
     }
     

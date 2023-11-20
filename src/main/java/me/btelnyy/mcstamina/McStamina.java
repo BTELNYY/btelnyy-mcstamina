@@ -47,9 +47,6 @@ public class McStamina extends JavaPlugin {
         // SnakeYAML fix
         Thread.currentThread().setContextClassLoader(this.getClassLoader());
         
-
-
-
         // Register events
         getServer().getPluginManager().registerEvents(new EventListener(), this);
 

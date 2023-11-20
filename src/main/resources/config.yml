@@ -5,3 +5,9 @@ plugin_enabled: true
 # 20 ticks is one IRL second
 # This means that at 20, you can run for 7 seconds (since at 3 hunger bars you cant sprint anymore)
 stamina_deplete_rate: 10
+
+# How many food levels should be depleted per tick of sprinting? (A player has 20 food levels)
+stamina_deplete_amount: 1
+
+# How many food levels should be regained per tick of not sprinting? (A player has 20 food levels)
+stamina_regen_amount: 1
